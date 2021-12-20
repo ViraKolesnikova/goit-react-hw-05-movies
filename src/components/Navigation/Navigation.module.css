@@ -1,0 +1,23 @@
+header {
+  padding: 16px 26px;
+  border-bottom: 1px solid rgb(121, 119, 119);
+  box-shadow: rgb(121, 119, 119) 0px 7px 29px 0px;
+}
+
+nav {
+  padding-left: 16px;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+a:not(:last-child) {
+  margin-right: 18px;
+}
+
+.link {
+  color: rgb(11, 11, 39);
+}
+
+.activeLink {
+  color: rgb(144, 40, 40);
+}

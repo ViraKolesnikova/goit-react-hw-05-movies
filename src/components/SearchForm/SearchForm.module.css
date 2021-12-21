@@ -1,0 +1,16 @@
+form {
+  padding: 26px 0;
+}
+
+input {
+  margin-right: 10px;
+  padding: 6px 12px;
+}
+
+button {
+  padding: 8px 16px;
+  background-color: cadetblue;
+  color: #fff;
+  border: none;
+  box-shadow: 2px 2px 8px #888888;
+}

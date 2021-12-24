@@ -3,6 +3,9 @@ import { Routes, Route } from 'react-router-dom';
 import Container from './components/Container';
 import Navigation from './components/Navigation';
 import Header from './components/Header';
+import CastBlock from './components/CastBlock';
+import ReviewsBlock from './components/ReviewsBlock';
+
 import HomePage from './pages/HomePage';
 import MovieDetailsPage from './pages/MoveiDetailsPage';
 import MoviesPage from './pages/MoviesPage';
@@ -16,8 +19,11 @@ export default function App() {
       <Container>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/movies" element={<MoviesPage />}>
-            <Route path=":movieId" element={<MovieDetailsPage />} />
+          <Route path="/movies/*" element={<MoviesPage />}>
+            <Route path=":movieId" element={<MovieDetailsPage />} >
+              <Route path="cast" element={<CastBlock />} />
+              <Route path="reviews" element={<ReviewsBlock/>}/>
+            </Route>
           </Route>
             
          

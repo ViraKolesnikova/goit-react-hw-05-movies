@@ -7,7 +7,7 @@ export default function HomePage() {
   const [movies, setMovies] = useState(null);
 
   useEffect(() => {
-    fetchAPI.fetchPopularMovies().then(response=> setMovies(response));    
+    fetchAPI.fetchPopularMovies().then(response=> setMovies(response.results));    
   }, [])
 
   return (

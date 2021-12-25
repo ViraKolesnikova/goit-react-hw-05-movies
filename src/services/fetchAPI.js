@@ -30,3 +30,8 @@ export function fetchReviews(movieId) {
   const reviews = baseURL + `/movie/${movieId}/reviews?` + keyAPI;
   return fetchMoviesAPI(reviews);
 }
+
+export function fetchByQuery(query) {
+  const queryEndpoint = baseURL +`/search/movie?query=${query}&` + keyAPI;
+  return fetchMoviesAPI(queryEndpoint);  
+}

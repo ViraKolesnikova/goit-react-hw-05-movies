@@ -8,25 +8,24 @@ export default function ReviewsBlock() {
   const params = useParams();
 
   useEffect(() => {
-    fetchReviews(params.movieId).then(response => {
-      setReviews(response.results);
-      console.log(response.results);
-    });
+    fetchReviews(params.movieId).then(response => setReviews(response.results));
   }, [params.movieId]);
 
   return (
     <>
-      {reviews && (
+      {reviews?.length > 0 && (
         <ul>
-          {reviews.map(review => 
-              <li key={review.id}>
-                <h4>Author: {review.author}</h4>
-                <p>"{review.content}"</p>
-              </li>
-          )}
-          </ul>
+          {reviews.map(review => (
+            <li key={review.id}>
+              <h4>Author: {review.author}</h4>
+              <p>"{review.content}"</p>
+            </li>
+          ))}
+        </ul>
       )}
-          <li>There are no reviews yet. Be the first!</li>            
+      {reviews?.length === 0 && (
+        <li>There are no reviews yet. Be the first!</li>
+      )}
     </>
   );
 }

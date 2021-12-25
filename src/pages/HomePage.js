@@ -1,29 +1,24 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+
 
 import * as fetchAPI from '../services/fetchAPI';
+import MoviesList from '../components/MoviesList/MoviesList';
+import Loader from '../components/Loader';
 
 export default function HomePage() {
   const [movies, setMovies] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    fetchAPI.fetchPopularMovies().then(response=> setMovies(response.results));    
+    setLoading(true)
+    fetchAPI.fetchPopularMovies().then(response => setMovies(response.results));
+    setLoading(false);
   }, [])
 
   return (
     <>
       <h1>Trending today</h1>
-      {movies && (
-        <ul>
-          {movies.map(movie => (
-            <li key={movie.id}>
-              <Link to={`/movies/${movie.id}`}>
-                {movie.title}
-              </Link>
-            </li>)
-          )}
-        </ul>
-      )}
+      {movies && <MoviesList moviesData={movies}/>}
     </>
   )
 }

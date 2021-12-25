@@ -8,6 +8,7 @@ import img from '../../images/60380.jpg';
 export default function MovieCard() {
   const params = useParams();
   const [details, setDetails] = useState(null);
+  
 
   useEffect(() => {
     fetchAPI
@@ -23,7 +24,7 @@ export default function MovieCard() {
             src={
               details.poster_path
                 ? `https://image.tmdb.org/t/p/w500${details.poster_path}`
-                : { img }
+                : img
             }
             alt={details.title}
             width="300"

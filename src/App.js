@@ -1,4 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import Container from './components/Container';
 import Navigation from './components/Navigation';
@@ -17,21 +19,23 @@ export default function App() {
         <Navigation />
       </Header>
       <Container>
+        
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/movies/*" element={<MoviesPage />}>
+
             <Route path=":movieId" element={<MovieDetailsPage />} >
               <Route path="cast" element={<CastBlock />} />
               <Route path="reviews" element={<ReviewsBlock/>}/>
             </Route>
-          </Route>
-            
+          </Route>            
          
           <Route
             path="*"
             element={<HomePage />}
           />
         </Routes>
+       <ToastContainer autoClose={4000} />
       </Container>
     </>
   );

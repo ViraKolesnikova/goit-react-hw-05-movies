@@ -5,15 +5,20 @@ import s from './MovieCard.module.css';
 import * as fetchAPI from '../../services/fetchAPI';
 import img from '../../images/60380.jpg';
 
+import LoaderMask from '../LoaderMask';
+
 export default function MovieCard() {
   const params = useParams();
   const [details, setDetails] = useState(null);
-  
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     fetchAPI
       .fetchMovieDetails(params.movieId)
-      .then(response => setDetails(response));
+      .then(response => setDetails(response))
+      .catch(console.error())
+      .finally(() => setLoading(false));
   }, [params.movieId]);
 
   return (
@@ -41,6 +46,7 @@ export default function MovieCard() {
           </div>
         </div>
       )}
+      {loading && <LoaderMask />}
     </>
   );
 }

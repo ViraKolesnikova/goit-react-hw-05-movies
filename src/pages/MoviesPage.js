@@ -12,7 +12,7 @@ import { fetchByQuery } from '../services/fetchAPI';
 
 import SearchForm from '../components/SearchForm/SearchForm';
 import MoviesList from '../components/MoviesList/MoviesList';
-import Loader from '../components/Loader';
+import LoaderMask from '../components/LoaderMask';
 
 export default function MoviesPage() {
   const [query, setQuery] = useState('');
@@ -24,21 +24,22 @@ export default function MoviesPage() {
   const queryValue = new URLSearchParams(location.search).get('query');
 
   useEffect(() => {
-    setLoading(true);
-    query &&
+    if (query) {      
+      setLoading(true);
       fetchByQuery(query).then(response => {
         response.results.length === 0
-          ? toast.error('Nothing was found!')
-          : setMoviesByQuery(response.results);
-      });
-    setLoading(false);
+        ? toast.error('Nothing was found!')
+        : setMoviesByQuery(response.results);
+      }).catch(console.error())
+      .finally(() => setLoading(false)); 
+    }    
   }, [query]);
 
   useEffect(() => {
-    setLoading(true);
     location.search !== '' &&
-      fetchByQuery(queryValue).then(response => setMoviesByQuery(response.results));
-    setLoading(false);
+      fetchByQuery(queryValue)
+        .then(response => setMoviesByQuery(response.results))
+        .catch(console.error())        
   }, [location.search, queryValue]);
 
   const findMovieByQuery = keyword => {
@@ -50,20 +51,22 @@ export default function MoviesPage() {
   };
 
   return (
-    <div>
-       {loading && <Loader />}
-      <Routes>
-        <Route path="" element={<SearchForm onSubmit={findMovieByQuery} />}>
-          {moviesByQuery?.length > 0 && (
-            <Route
-              index
-              element={<MoviesList moviesData={moviesByQuery} />}
-            />
-          )}
-        </Route>
-      </Routes>
+    <>
+      <div>
+        <Routes>
+          <Route path="" element={<SearchForm onSubmit={findMovieByQuery} />}>
+            {moviesByQuery?.length > 0 && (
+              <Route
+                index
+                element={<MoviesList moviesData={moviesByQuery} />}
+              />
+            )}
+          </Route>
+        </Routes>
 
-      <Outlet />
-    </div>
+        <Outlet />
+      </div>
+      {loading && <LoaderMask/>}
+    </>
   );
 }
